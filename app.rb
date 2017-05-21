@@ -3,6 +3,8 @@
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
+require 'sinatra/redirect_with_flash'
+
 require './environments.rb'
 
 enable :sessions
@@ -37,11 +39,9 @@ end
 post "/posts" do
  @post = Post.new(params[:post])
  if @post.save
-   flash[:success] = 'Congrats! Love the new post. (This message will disappear in 4 seconds.)'
-   redirect "posts/#{@post.id}"
+   redirect "posts/#{@post.id}", :notice => 'Congrats! Love the new post. (This message will disappear in 4 seconds.)'
  else
-   flash[:danger] = 'Something went wrong. Try again. (This message will disappear in 4 seconds.)'
-   redirect "posts/create"
+   redirect "posts/create", :error => 'Something went wrong. Try again. (This message will disappear in 4 seconds.)'
  end
 end
 

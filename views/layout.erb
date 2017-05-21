@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="olehsliusar">
+    <meta name="author" content="">
     <title><%= title %></title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -20,6 +20,7 @@
       }
     </style>
   </head>
+
   <body>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -41,13 +42,14 @@
       </div>
     </div>
 
+
     <div class="container">
 
-      <% if flash[:success] %>
-       <div class="alert alert-success"><%= flash[:success] %></div>
+      <% if flash[:notice] %>
+        <p class="alert alert-success"><%= flash[:notice] %>
       <% end %>
-      <% if flash[:danger] %>
-       <div class="alert alert-danger"><%= flash[:danger] %></div>
+      <% if flash[:error] %>
+        <p class="alert alert-warning"><%= flash[:error] %>
       <% end %>
       <%= yield %>
 
