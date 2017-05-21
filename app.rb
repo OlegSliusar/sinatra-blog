@@ -2,8 +2,10 @@
 
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'sinatra/flash'
 require './environments.rb'
 
+enable :sessions
 
 class Post < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5 }
@@ -32,13 +34,15 @@ get "/posts/create" do
   erb :"posts/create"
 end
 
-post '/posts' do
-  @post = Post.new(params[:post])
-  if @post.save
-    redirect "posts/#{@post.id}"
-  else
-    erb :"posts/create"
-  end
+post "/posts" do
+ @post = Post.new(params[:post])
+ if @post.save
+   flash[:success] = 'Congrats! Love the new post. (This message will disappear in 4 seconds.)'
+   redirect "posts/#{@post.id}"
+ else
+   flash[:danger] = 'Something went wrong. Try again. (This message will disappear in 4 seconds.)'
+   redirect "posts/create"
+ end
 end
 
 get "/posts/:id" do
